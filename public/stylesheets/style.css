@@ -1,0 +1,97 @@
+* {
+  margin: 0%;
+  padding: 0%;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+:root {
+  --primaryColor: rgb(221, 81, 0);
+  --secondaryColor: rgb(235, 235, 235);
+  --subActiveColor: rgba(221, 81, 0, 0.078);
+  --incomingTransactionBgColor: #07fa8922;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+small {
+  margin-bottom: 0;
+}
+
+#main {
+  width: 100%;
+}
+
+#main .nav {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  color: var(--secondaryColor);
+  background-color: var(--primaryColor);
+}
+
+#main .nav .left h1 {
+  text-transform: capitalize;
+  font-weight: 400;
+  padding: 0.25rem;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  background-color: var(--secondaryColor);
+}
+
+#main .nav .right button {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: var(--secondaryColor);
+}
+
+
+#createTransaction {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  bottom: 0.5rem;
+  right: 1.3rem;
+  border-radius: 50%;
+  background-color: var(--primaryColor);
+  border-color: var(--primaryColor);
+}
+
+#transactionFrom {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.transaction {
+  display: flex;
+  flex-direction: column;
+  padding: 0.65rem;
+  background-color: var(--subActiveColor);
+}
+
+.incoming {
+  background-color: var(--incomingTransactionBgColor);
+}

@@ -1,0 +1,40 @@
+user authenticate  
+
+previous transactions
+add new transactions for loggedInUser
+total value of transactions
+
+profile page
+
+Schema
+    userSchema
+    transaction
+
+
+
+userSchema
+    username
+    password
+    email/number
+    monthly budget
+
+transactionSchema
+    amount 
+    user
+    description
+    transactionType : incoming/outgoing
+    timeStamps : true
+
+
+
+npm i passport passport-local passport-local-mongoose express-session  mongoose
+
+
+
+    
+
+
+
+
+
+

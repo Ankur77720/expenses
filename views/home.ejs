@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<body>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Create transaction</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form onsubmit="submitHandler(event)" id="transactionFrom" action="/createTransaction" method="post">
+            <input type="number" name="amount" placeholder="Enter transaction amount">
+            <select name="transactionType">
+              <option value="incoming">incoming</option>
+              <option value="outgoing">outgoing</option>
+            </select>
+            <input type="text" name="description" placeholder="Enter description (optional)">
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button form="transactionFrom" type="submit" class="btn btn-primary">Create</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="main">
+    <nav class="nav">
+      <div class="left">
+        <h1><%= loggedInUser.username %></h1>
+      </div>
+      <div class="right">
+        <button>balance : <span> <%= loggedInUser.monthlyBudget %> </span></button>
+      </div>
+    </nav>
+
+    <div class="transactions">
+      <% userTransactions.reverse().forEach(transaction=>{ %>
+      <div class="transaction <%= transaction.transactionType=='incoming'?'incoming':'' %>">
+        <h3><%= transaction.amount %></h3>
+        <small><%= transaction.description %></small>
+      </div>
+      <% }) %>
+    </div>
+
+    <!-- Button trigger modal -->
+    <button id="createTransaction" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      <i class="ri-add-line"></i>
+    </button>
+  </div>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js" integrity="sha512-NQfB/bDaB8kaSXF8E77JjhHG5PM6XVRxvHzkZiwl3ddWCEPBa23T76MuWSwAJdMGJnmQqM0VeY9kFszsrBEFrQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script>
+    const balanceButton = document.querySelector('#main .nav .right button')
+
+    balanceButton.addEventListener('click', async (event) => {
+
+      const balance = prompt('Update your monthly balance')
+
+      const response = await axios.post('/updateBudget', {
+        budget: balance
+      })
+
+      console.log(response)
+      balanceButton.querySelector('span').innerHTML = response.data.newBudget
+
+    })
+
+
+    async function submitHandler(event) {
+      event.preventDefault();
+
+      const data = new FormData(document.querySelector("#transactionFrom"))
+
+      /* encType="multipart/formData" */
+
+      const response = await axios.post('/createTransaction', data);
+      // console.log(response);
+    }
+  </script>
+
+
+</body>
+
+</html>
